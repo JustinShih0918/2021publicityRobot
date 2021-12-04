@@ -19,14 +19,12 @@ import edu.wpi.first.wpilibj.XboxController;
 
 public class Robot extends TimedRobot {
   XboxController joy = new XboxController(0);
-  VictorSP suck = new VictorSP(5);
   VictorSP shoot = new VictorSP(4);
   VictorSP base1 = new VictorSP(0);
   VictorSP base2 = new VictorSP(1);
   VictorSP base3 = new VictorSP(2);
   VictorSP base4 = new VictorSP(3);
-  Servo servo = new Servo(6);
-  VictorSP barrier = new VictorSP(7);
+  VictorSP barrier = new VictorSP(6);
   Timer timer = new Timer();
 
   @Override
@@ -52,39 +50,18 @@ public class Robot extends TimedRobot {
     base4.set(-joy.getRawAxis(1)/3);
     
     if(joy.getRawButton(4)){
-      shoot.set(0.7);
+      shoot.set(-0.7);
     }
     else{
       shoot.set(0);
     }
-
-    if(joy.getRawButtonPressed(4)){
-      timer.start();
-    }
-    else if(joy.getRawButtonReleased(4)){
-      timer.stop();
-      timer.reset();  
-    }
-
-    if(timer.get()>0.6&&timer.get()<1.2){
+    if(joy.getRawButton(3)){
       barrier.set(0.3);
     }
-    else if(timer.get()>1.2){
+    else{
       barrier.set(0);
     }
-    else{
-      barrier.set(1);
-    }
 
-    if(joy.getRawButton(6)){
-      suck.set(-0.7);
-    }
-    else if(joy.getRawButton(5)){
-      suck.set(0.7);
-    }
-    else{
-      suck.set(0);;
-    }
 
   }
 
