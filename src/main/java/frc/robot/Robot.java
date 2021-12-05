@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -44,18 +43,31 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    base1.set(-joy.getRawAxis(1)/3);
-    base2.set(joy.getRawAxis(5)/3);
-    base3.set(joy.getRawAxis(5)/3);
-    base4.set(-joy.getRawAxis(1)/3);
+    base1.set(joy.getRawAxis(1)/3);
+    base2.set(-joy.getRawAxis(5)/3);
+    base3.set(-joy.getRawAxis(5)/3);
+    base4.set(joy.getRawAxis(1)/3);
     
-    if(joy.getRawButton(4)){
+    if(joy.getYButton()){
       shoot.set(-0.7);
     }
     else{
       shoot.set(0);
     }
-    if(joy.getRawButton(3)){
+
+    if(joy.getYButtonPressed()){
+      timer.start();
+    }
+    
+    if(timer.get()>0.8&&timer.get()<1.3&&timer.get()!=0){
+      barrier.set(0.3);
+    }
+    else if(timer.get()>1.3){
+      barrier.set(0);
+      timer.stop();
+      timer.reset();
+    }
+    else if(joy.getAButton()){
       barrier.set(0.3);
     }
     else{
