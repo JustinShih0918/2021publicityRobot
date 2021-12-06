@@ -5,29 +5,24 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.System.drivebase;
+import frc.robot.System.shoot;
 
 /**                                                  
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
  * the package after creating this project, you must also update the build.gradle file in the
- * project.
+ * project.6
  */
 
 public class Robot extends TimedRobot {
-  XboxController joy = new XboxController(0);
-  VictorSP shoot = new VictorSP(4);
-  VictorSP base1 = new VictorSP(0);
-  VictorSP base2 = new VictorSP(1);
-  VictorSP base3 = new VictorSP(2);
-  VictorSP base4 = new VictorSP(3);
-  VictorSP barrier = new VictorSP(6);
-  Timer timer = new Timer();
+  public static XboxController joy;
 
   @Override
-  public void robotInit() {}
+  public void robotInit() {
+    joy = new XboxController(0);
+  }
 
   @Override
   public void robotPeriodic() {}
@@ -39,41 +34,15 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {}
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    drivebase.teleopInit();
+    shoot.teleopInit();
+  }
 
   @Override
   public void teleopPeriodic() {
-    base1.set(joy.getRawAxis(1)/3);
-    base2.set(-joy.getRawAxis(5)/3);
-    base3.set(-joy.getRawAxis(5)/3);
-    base4.set(joy.getRawAxis(1)/3);
-    
-    if(joy.getYButton()){
-      shoot.set(-0.7);
-    }
-    else{
-      shoot.set(0);
-    }
-
-    if(joy.getYButtonPressed()){
-      timer.start();
-    }
-    
-    if(timer.get()>0.8&&timer.get()<1.3&&timer.get()!=0){
-      barrier.set(0.3);
-    }
-    else if(timer.get()>1.3){
-      barrier.set(0);
-      timer.stop();
-      timer.reset();
-    }
-    else if(joy.getAButton()){
-      barrier.set(0.3);
-    }
-    else{
-      barrier.set(0);
-    }
-
+     drivebase.teleopPeriodic();
+     shoot.teleopPeriodic();
 
   }
 
@@ -87,5 +56,7 @@ public class Robot extends TimedRobot {
   public void testInit() {}
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    drivebase.dirctControll(0.5, -0.5);
+  }
 }
