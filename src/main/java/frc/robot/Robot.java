@@ -4,10 +4,13 @@
 
 package frc.robot;
 
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.System.drivebase;
 import frc.robot.System.shoot;
+
+
 
 /**                                                  
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,32 +20,36 @@ import frc.robot.System.shoot;
  */
 
 public class Robot extends TimedRobot {
-  public static XboxController joy;
+    public static XboxController joy = new XboxController(0);
 
   @Override
   public void robotInit() {
-    joy = new XboxController(0);
+    drivebase.init();
+    shoot.init();
   }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
 
-  @Override
-  public void autonomousInit() {}
-
-  @Override
-  public void autonomousPeriodic() {}
-
-  @Override
-  public void teleopInit() {
-    drivebase.teleopInit();
-    shoot.teleopInit();
   }
+
+  @Override
+  public void autonomousInit() {
+
+  }
+
+  @Override
+  public void autonomousPeriodic() {
+
+  }
+
+  @Override
+  public void teleopInit() {}
 
   @Override
   public void teleopPeriodic() {
-     drivebase.teleopPeriodic();
-     shoot.teleopPeriodic();
+    drivebase.teleop();
+    shoot.teleop();
 
   }
 
@@ -57,6 +64,5 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    drivebase.dirctControll(0.5, -0.5);
   }
 }
